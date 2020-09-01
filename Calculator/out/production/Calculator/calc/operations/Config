@@ -1,0 +1,10 @@
+#;Comment
+POP;Pop
+PUSH;Push
++;Addition
+-;Subtraction
+*;Multiplication
+/;Division
+SQRT;SquareRoot
+PRINT;Print
+DEFINE;Define
