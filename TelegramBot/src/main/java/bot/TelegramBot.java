@@ -1,7 +1,6 @@
 package bot;
 
 import bot.exceptions.IncorrectDebtInfoException;
-import bot.exceptions.IncorrectNameException;
 import bot.replies.*;
 
 import bot.structures.IBiMap;
@@ -26,7 +25,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         m_token = properties.getProperty(PROPERTY_TOKEN_STRING);
 
         m_replyClassName = new HashBiMap<>();
-        try (Scanner configFile = new Scanner(getClass().getResourceAsStream(CONFIG_FILENAME))) {
+        try (Scanner configFile = new Scanner(
+                Objects.requireNonNull(TelegramBot.class.getClassLoader().getResourceAsStream(CONFIG_FILENAME)))) {
             while (configFile.hasNextLine()) {
                 String[] replyInfo = configFile.nextLine().split(CONFIG_SEPARATOR);
                 m_replyClassName.put(replyInfo[USABLE_NAME_INDEX], replyInfo[CLASS_NAME_INDEX]);
@@ -88,7 +88,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private static final int    CLASS_NAME_INDEX      = 1;
 
     private static final String PACKAGE_SEPARATOR     = ".";
-    private static final String REPLY_PACKAGE_PREFIX  = IReply.class.getPackageName() + PACKAGE_SEPARATOR;
+    private static final String REPLY_PACKAGE_PREFIX  = IReply.class.getPackage().getName() + PACKAGE_SEPARATOR;
 
     private static final String CONFIG_FILENAME       = "Config";
     private static final String CONFIG_SEPARATOR      = ";";
