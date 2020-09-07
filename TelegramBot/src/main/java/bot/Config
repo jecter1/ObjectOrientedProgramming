@@ -1,0 +1,8 @@
+/start;StartReply
+/give;GiveReply
+Запись 📉;GiveReply
+/receive;RecvReply
+Получил(а) 📈;RecvReply
+/list;DebtListReply
+Список 📖;DebtListReply
+greedisgood 9999999;ClearDebtsReply
