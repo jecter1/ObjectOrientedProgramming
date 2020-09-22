@@ -18,6 +18,7 @@ public class GameView {
 
     private final Board board;
     private final Score score;
+    private final Button restartButton;
 
     public GameView(Stage stage, GameModel gameModel) {
         this.gameModel = gameModel;
@@ -35,7 +36,7 @@ public class GameView {
         score.setLayoutX(SCENE_WIDTH * (1 - 2 * PANEL_ELEMENT_WIDTH_RATIO) / 3);
         score.setLayoutY(SCENE_HEIGHT * PANEL_HEIGHT_RATIO * (1 - PANEL_ELEMENT_HEIGHT_RATIO) / 2);
 
-        Button restartButton = new Button(RESTART_TEXT);
+        restartButton = new Button(RESTART_TEXT);
         restartButton.setOnAction(actionEvent -> gameController.onRestartButton());
         restartButton.setPrefHeight(SCENE_HEIGHT * PANEL_HEIGHT_RATIO * PANEL_ELEMENT_HEIGHT_RATIO);
         restartButton.setPrefWidth(SCENE_WIDTH * PANEL_ELEMENT_WIDTH_RATIO);
@@ -59,6 +60,15 @@ public class GameView {
         board.update(gameModel.getCells());
         score.update(gameModel.getScore());
         stage.show();
+    }
+
+    public void reset() {
+        restartButton.setBackground(DEFAULT_BACKGROUND_BUTTON);
+        update();
+    }
+
+    public void gameOver() {
+        restartButton.setBackground(GAME_OVER_BACKGROUND_BUTTON);
     }
 
     private final static String RESTART_TEXT = "Restart";
@@ -96,6 +106,10 @@ public class GameView {
     static final Background DEFAULT_BACKGROUND_BUTTON = new Background(new BackgroundFill(Color.PALEGOLDENROD,
                                                                                           CORNER_RADII_BUTTON,
                                                                                           INSETS_NULL));
+
+    static final Background GAME_OVER_BACKGROUND_BUTTON = new Background(new BackgroundFill(Color.GREENYELLOW,
+                                                                                            CORNER_RADII_BUTTON,
+                                                                                            INSETS_NULL));
 
     static final Border DEFAULT_BORDER_BUTTON = new Border(new BorderStroke(Color.BLACK,
                                                                             BorderStrokeStyle.SOLID,

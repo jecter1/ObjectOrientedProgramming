@@ -8,6 +8,7 @@ public class GameModel {
 
     private final int[][] cell;
     private int score;
+    private boolean lost;
 
     public GameModel(Stage stage) {
         gameView = new GameView(stage, this);
@@ -19,6 +20,7 @@ public class GameModel {
     public int getScore() { return score; }
 
     public void reset() {
+        lost = false;
         score = 0;
 
         for(int y = 0; y < HEIGHT; ++y) {
@@ -30,10 +32,12 @@ public class GameModel {
         generateCell();
         generateCell();
 
-        gameView.update();
+        gameView.reset();
     }
 
     public void swipeUp() {
+        if (lost) return;
+
         boolean isActionPerformed = false;
 
         for (int x = 0; x < WIDTH; ++x) {
@@ -82,9 +86,14 @@ public class GameModel {
 
         if (isActionPerformed) generateCell();
         gameView.update();
+        if (lost = isLose()) {
+            gameView.gameOver();
+        }
     }
 
     public void swipeDown() {
+        if (lost) return;
+
         boolean isActionPerformed = false;
 
         for (int x = 0; x < WIDTH; ++x) {
@@ -133,9 +142,14 @@ public class GameModel {
 
         if (isActionPerformed) generateCell();
         gameView.update();
+        if (lost = isLose()) {
+            gameView.gameOver();
+        }
     }
 
     public void swipeRight() {
+        if (lost) return;
+
         boolean isActionPerformed = false;
 
         for (int y = 0; y < HEIGHT; ++y) {
@@ -184,9 +198,14 @@ public class GameModel {
 
         if (isActionPerformed) generateCell();
         gameView.update();
+        if (lost = isLose()) {
+            gameView.gameOver();
+        }
     }
 
     public void swipeLeft() {
+        if (lost) return;
+
         boolean isActionPerformed = false;
 
         for (int y = 0; y < HEIGHT; ++y) {
@@ -235,6 +254,9 @@ public class GameModel {
 
         if (isActionPerformed) generateCell();
         gameView.update();
+        if (lost = isLose()) {
+            gameView.gameOver();
+        }
     }
 
     private void generateCell() {
